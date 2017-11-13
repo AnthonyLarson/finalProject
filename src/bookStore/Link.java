@@ -1,14 +1,14 @@
 package bookStore;
 
 public class Link {
-	public String dData; //data item
+	public Book dData; //data item
 	public Link next; //next Link
 	
 	/**
 	 * Constructor for link with data item param
 	 * @param dData string data item
 	 */
-	public Link(String dData) {
+	public Link(Book dData) {
 		super();
 		this.dData = dData;
 	}
@@ -18,6 +18,6 @@ public class Link {
 	 */
 	public void displayLink()
 	{
-		System.out.println(dData + " ");
+		System.out.println(dData);
 	}
 }

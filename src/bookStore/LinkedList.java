@@ -28,27 +28,30 @@ public class LinkedList {
 	 * insert item at end of queue
 	 * @param item data item
 	 */
-	public void insertLast(String item) //insert item at end of list
+	public void insertLast(Book item, int quantity) //insert item at end of list
 	{
 		Link newLink = new Link(item); //make new link
-		if(isEmpty())
+		for(int i = 0; i < quantity; i++)
 		{
-			first = newLink;
+			if(isEmpty())
+			{
+				first = newLink;
+			}
+			else
+			{
+				last.next = newLink;
+			}
+			last = newLink;
 		}
-		else
-		{
-			last.next = newLink;
-		}
-		last = newLink;
 	}
 	
 	/**
 	 * delete first item in queue
 	 * @return first item in list
 	 */
-	public String deleteFirst()
+	public Book deleteFirst()
 	{
-		String temp = first.dData;
+		Book temp = first.dData;
 		if(first.next == null)
 		{
 			last = null;
@@ -75,8 +78,28 @@ public class LinkedList {
 	 * display first item in list
 	 * @return first item in list
 	 */
-	public String displayFirst()
+	public Book displayFirst()
 	{
 		return first.dData;
+	}
+	
+	public void deleteItem(Book search, int quantity)
+	{
+		Link current = first;
+		
+		for(int i = 0; i < quantity; i++)
+		{
+			while(current.dData != search)
+			{
+				if(current.dData == search)
+				{
+					deleteFirst();
+				}
+				else
+				{
+					current = current.next;
+				}
+			}
+		}
 	}
 }
