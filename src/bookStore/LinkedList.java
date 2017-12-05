@@ -28,20 +28,25 @@ public class LinkedList {
 	 * insert item at end of queue
 	 * @param item data item
 	 */
-	public void insertLast(Book item, int quantity) //insert item at end of list
+	public void insertLast(Book item) //insert item at end of list
 	{
 		Link newLink = new Link(item); //make new link
+		if(isEmpty())
+		{
+			first = newLink;
+		}
+		else
+		{
+			last.next = newLink;
+		}
+		last = newLink;
+	}
+	
+	public void insertItem(Book item, int quantity)
+	{
 		for(int i = 0; i < quantity; i++)
 		{
-			if(isEmpty())
-			{
-				first = newLink;
-			}
-			else
-			{
-				last.next = newLink;
-			}
-			last = newLink;
+			insertLast(item);
 		}
 	}
 	
@@ -83,23 +88,77 @@ public class LinkedList {
 		return first.dData;
 	}
 	
-	public void deleteItem(Book search, int quantity)
-	{
-		Link current = first;
-		
-		for(int i = 0; i < quantity; i++)
+	public Link sort(Link a)
+	{		
+		if(a == null || a.next == null)
 		{
-			while(current.dData != search)
-			{
-				if(current.dData == search)
-				{
-					deleteFirst();
-				}
-				else
-				{
-					current = current.next;
-				}
-			}
+			return a;
 		}
+		// get the middle of the list
+        Link mid = middle(a);
+        Link nextMid = mid.next;
+ 
+        // set the next of middle node to null
+        mid.next = null;
+ 
+        // Apply mergeSort on left list
+        Link left = sort(a);
+ 
+        // Apply mergeSort on right list
+        Link right = sort(nextMid);
+ 
+        // Merge the left and right lists
+        Link sorted = merge(left, right);
+        return sorted;
+		
+	}
+	
+	public Link merge(Link b, Link c)
+	{
+		Link sorted = null;
+		
+		//if link is null return opposite link
+		if(b == null)
+		{
+			return c;
+		}
+		if(c == null)
+		{
+			return b;
+		}
+		
+		if(b.dData.getIsbn() <= c.dData.getIsbn())
+		{
+			sorted = b;
+			sorted = merge(b.next,c);
+		}
+		else
+		{
+			sorted = c;
+			sorted = merge(b,c.next);
+		}
+		return sorted;
+	}
+	
+	public Link middle(Link d)
+	{
+        if (d == null)
+        {
+            return d;
+        }
+        Link current = d;
+        Link nextCur = d.next;
+        
+        //find middle
+        while (nextCur != null)
+        {
+            nextCur = nextCur.next;
+            if(nextCur!=null)
+            {
+                current = current.next;
+                nextCur=nextCur.next;
+            }
+        }
+        return current;
 	}
 }
